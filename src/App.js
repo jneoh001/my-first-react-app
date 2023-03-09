@@ -47,9 +47,9 @@ function App() {
       )}
 
       {showEvents && <EventList events={events} handleClick={handleClick} />}
-
+        
       <div>
-        <button onClick = {()=> setShowModals(true)}>Show Modal</button>
+        <button onClick = {()=> setShowModals(true)}>Add New Event</button>
       </div>
 
       {showModal && <Modal handleClose = {handleClose}>
