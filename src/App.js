@@ -4,17 +4,21 @@ import React, { useState } from 'react'
 import Title from './components/Title'
 import Modal from './components/Modal'
 import EventList from './components/EventList'
+import NewEventForm from "./components/NewEventForm"
 
 // if a function starts with the use Keywrod, it is a react hook.
 
 function App() {
-  const [showModal, setShowModals] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [showEvents, setShowEvents] = useState(true)
-  const [events, setEvents] = useState([
-    {title: "marios birthday", id: 1},
-    {title: "bowsers live stream", id: 2},
-    {title: "race on moo moo farm", id: 3},
-  ])
+  const [events, setEvents] = useState([])
+
+  const addEvent = (event) => {
+    setEvents( (prevEvents)=> {
+      return [...prevEvents, event]  
+    })
+    setShowModal(false);
+  }
   
   const handleClick = (id) => {
     setEvents( (prevEvents) => {
@@ -25,9 +29,7 @@ function App() {
     console.log(id)
   }
 
-  const handleClose = () => {
-    setShowModals(false)
-  }
+  
   const subtitle = "All the latest events in Marioland"
 
   return (
@@ -48,16 +50,15 @@ function App() {
 
       {showEvents && <EventList events={events} handleClick={handleClick} />}
         
-      <div>
-        <button onClick = {()=> setShowModals(true)}>Add New Event</button>
-      </div>
+      
 
-      {showModal && <Modal handleClose = {handleClose}>
-        <h2>10% Discount Code</h2>
-        <p>Use the code NINJA10 at the checkout</p>
+      {showModal && <Modal>
+        <NewEventForm addEvent={addEvent} />
       </Modal>}
-
-
+      
+      <div>
+        <button onClick = {()=> setShowModal(true)}>Add New Event</button>
+      </div>
 
     </div>
   );
